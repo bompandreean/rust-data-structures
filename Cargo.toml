@@ -1,4 +1,4 @@
-workspace = { members = [ "linkedlist_binarytrees","my_pseudo_random"] }
+workspace = { members = [ "data_struct" ,"my_pseudo_random"] }
 [package]
 name = "algorithms"
 version = "0.1.0"
