@@ -1,0 +1,11 @@
+workspace = { members = [ "linkedlist_binarytrees","my_pseudo_random"] }
+[package]
+name = "algorithms"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+my_pseudo_random = { path = "C://Andreea//Study//rust//algorithms/my_pseudo_random" }
+rayon = "1.9.0"
