@@ -1,7 +1,7 @@
+use rayon::prelude::*;
 use std::fmt::Debug;
 use std::sync::Mutex;
 use std::thread;
-use rayon::prelude::*;
 
 fn pivot<T: PartialOrd + Debug>(vec: &mut [T]) -> usize {
     let mut p = 0;
@@ -19,9 +19,9 @@ fn pivot<T: PartialOrd + Debug>(vec: &mut [T]) -> usize {
 }
 
 struct RawWrapper<T>(*mut [T]);
-unsafe impl<T> Send for RawWrapper<T>{}
+unsafe impl<T> Send for RawWrapper<T> {}
 
-fn threaded_quick_sort_2<T: PartialOrd + Debug + Send + 'static >(vec: &mut [T]) {
+fn threaded_quick_sort_2<T: PartialOrd + Debug + Send + 'static>(vec: &mut [T]) {
     if vec.len() <= 1 {
         return;
     }
@@ -32,7 +32,7 @@ fn threaded_quick_sort_2<T: PartialOrd + Debug + Send + 'static >(vec: &mut [T])
     let (left, right) = vec.split_at_mut(pivot);
     let left_wrapped = RawWrapper(left);
 
-    unsafe{
+    unsafe {
         let left_thread = thread::spawn(move || {
             let raw_left = left_wrapped; //move the whole raw pointer
             threaded_quick_sort_2(&mut *raw_left.0); //unsafe operation
@@ -44,8 +44,7 @@ fn threaded_quick_sort_2<T: PartialOrd + Debug + Send + 'static >(vec: &mut [T])
     }
 }
 
-
-fn quick_sort_rayon<T: PartialOrd + Debug + Send>(vec: &mut [T]){
+fn quick_sort_rayon<T: PartialOrd + Debug + Send>(vec: &mut [T]) {
     if vec.len() <= 1 {
         return;
     }
@@ -67,8 +66,8 @@ mod test {
         let mut vec = vec![4, 9, 0, 5, 3, 1, 7];
         threaded_quick_sort_2(&mut vec);
         println!("{:?}", vec);
-    }  
-    
+    }
+
     #[test]
     fn test_rayon_quick_sort() {
         let mut vec = vec![4, 9, 0, 5, 3, 1, 7];
